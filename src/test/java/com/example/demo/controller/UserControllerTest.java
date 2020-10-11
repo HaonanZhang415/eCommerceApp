@@ -1,7 +1,6 @@
 package com.example.demo.controller;
 
 import com.example.demo.TestUtils;
-import com.example.demo.controllers.UserController;
 import com.example.demo.model.persistence.User;
 import com.example.demo.model.persistence.repositories.CartRepository;
 import com.example.demo.model.persistence.repositories.UserRepository;
@@ -56,4 +55,33 @@ public class UserControllerTest {
         assertEquals("thisIsHashed", u.getPassword());
 
     }
+
+    @Test
+    public void passwordVerification() {
+        CreateUserRequest userRequest = new CreateUserRequest();
+        userRequest.setUsername("username");
+        userRequest.setPassword("123");
+        userRequest.setConfirmPassword("123");
+        ResponseEntity<User> userResponseEntity = userController.createUser(userRequest);
+        assertEquals(400, userResponseEntity.getStatusCodeValue());
+    }
+
+    @Test
+    public void findUserById() {
+        ResponseEntity<User> userResponseEntity = userController.findById(0L);
+        assertEquals(0, userResponseEntity.getBody().getId());
+        userResponseEntity = userController.findById(1L);
+        assertEquals(404, userResponseEntity.getStatusCodeValue());
+    }
+
+    @Test
+    public void confirmPasswordTest() {
+        CreateUserRequest userRequest = new CreateUserRequest();
+        userRequest.setUsername("username");
+        userRequest.setPassword("123456test");
+        userRequest.setConfirmPassword("123456testaa");
+        ResponseEntity<User> userResponseEntity = userController.createUser(userRequest);
+        assertEquals(400, userResponseEntity.getStatusCodeValue());
+    }
+
 }
