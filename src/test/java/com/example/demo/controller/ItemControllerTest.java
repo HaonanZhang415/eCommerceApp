@@ -45,21 +45,18 @@ public class ItemControllerTest {
     public void findItemById(){
         ResponseEntity<Item> itemResponse = itemController.getItemById(0L);
         assertEquals(200, itemResponse.getStatusCodeValue());
-        assertNotNull(itemResponse.getBody());
     }
 
     @Test
     public void itemIdNotFound(){
         ResponseEntity<Item> itemResponse = itemController.getItemById(1L);
         assertEquals(404, itemResponse.getStatusCodeValue());
-        assertNull(itemResponse.getBody());
     }
 
     @Test
     public void findItemsByName(){
         ResponseEntity<List<Item>> itemResponse = itemController.getItemsByName("pencil");
         assertEquals(200, itemResponse.getStatusCodeValue());
-        assertNotNull(itemResponse.getBody());
         assertEquals(1, itemResponse.getBody().size());
     }
 

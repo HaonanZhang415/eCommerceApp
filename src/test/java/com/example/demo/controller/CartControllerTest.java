@@ -53,12 +53,8 @@ public class CartControllerTest {
         cartRequest.setItemId(0L);
         cartRequest.setQuantity(11);
         cartRequest.setUsername("username");
-
         ResponseEntity<Cart> cartResponse = cartController.addTocart(cartRequest);
-        assertEquals(200, cartResponse.getStatusCodeValue());
-
-        Cart cart = cartResponse.getBody();
-        assertEquals(BigDecimal.valueOf(43.89), cart.getTotal());
+        assertEquals(BigDecimal.valueOf(43.89), cartResponse.getBody().getTotal());
     }
 
     @Test
@@ -67,7 +63,6 @@ public class CartControllerTest {
         cartRequest.setItemId(0L);
         cartRequest.setQuantity(100);
         cartRequest.setUsername("wrongname");
-
         ResponseEntity<Cart> cartResponse = cartController.addTocart(cartRequest);
         assertEquals(404, cartResponse.getStatusCodeValue());
     }
@@ -78,7 +73,6 @@ public class CartControllerTest {
         cartRequest.setItemId(1L);
         cartRequest.setQuantity(100);
         cartRequest.setUsername("username");
-
         ResponseEntity<Cart> cartResponse = cartController.addTocart(cartRequest);
         assertEquals(404, cartResponse.getStatusCodeValue());
     }
@@ -88,7 +82,6 @@ public class CartControllerTest {
         cartRequest.setItemId(0L);
         cartRequest.setQuantity(100);
         cartRequest.setUsername("username");
-
         ResponseEntity<Cart> cartResponse = cartController.addTocart(cartRequest);
         assertEquals(200, cartResponse.getStatusCodeValue());
 
@@ -96,9 +89,7 @@ public class CartControllerTest {
         cartRequestModified.setItemId(0L);
         cartRequestModified.setQuantity(1);
         cartRequestModified.setUsername("username");
-
         cartResponse = cartController.removeFromcart(cartRequestModified);
-        assertEquals(200, cartResponse.getStatusCodeValue());
         assertEquals(BigDecimal.valueOf(395.01), cartResponse.getBody().getTotal());
     }
 }
